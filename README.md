@@ -1,10 +1,12 @@
-# 哈希计算器
+# Eggs
 
-一个简单的哈希计算工具，支持多种哈希算法。
+A utility toolkit for cryptographic operations and security measurements simulation.
 
-## 功能
+## Features
 
-- 支持多种哈希算法：
+### Hash Calculator
+
+- Support for multiple hash algorithms:
   - SHA-1
   - SHA-256
   - SHA-384
@@ -13,35 +15,62 @@
   - SHA3-384
   - SHA3-512
   - SM3
-- 支持文本和十六进制输入
-- 实时计算哈希值
-- 可复制哈希结果
+- Text and hexadecimal input modes
+- Real-time hash calculation
+- Copy results with one click
 
-## 使用方法
+### Boot Replay Metrics Simulator
 
-1. 选择输入类型（文本或十六进制）
-2. 选择哈希算法
-3. 在输入框中输入需要计算哈希的内容
-4. 结果将自动显示
-5. 点击"复制结果"按钮可以复制哈希值
+- Simulate Platform Configuration Register (PCR) measurements
+- Support for different hash algorithms (SHA1, SHA256)
+- Manual entry of measurements
+- File import for batch processing of measurements
+- Real-time PCR value updates
+- Visual representation of measurement logs
 
-## 构建与运行
+## Usage
+
+### Hash Calculator
+
+1. Select the input type (text or hexadecimal)
+2. Choose a hash algorithm
+3. Enter the content to hash in the input field
+4. Results are displayed automatically
+5. Click "Copy Result" to copy the hash value
+
+### Boot Replay Simulator
+
+1. Select the hash algorithm (SHA1 or SHA256)
+2. Choose PCR mode (single or all)
+3. Enter measurements manually or import from a file
+4. View updated PCR values and measurement logs
+5. Reset PCRs as needed
+
+## Building and Running
 
 ```bash
-# 克隆项目
-git clone https://github.com/yourusername/hash_calculator.git
-cd hash_calculator
+# Clone the project
+git clone https://github.com/yourusername/eggs.git
+cd eggs
 
-# 编译并运行
+# Run in debug mode
 cargo run
 
-# 构建发布版本
+# Build release version
 cargo build --release
 ```
 
-## 依赖
+## Dependencies
 
-- eframe - GUI 框架
-- sha1, sha2, sha3 - SHA 系列哈希算法
-- libsm - 中国 SM3 哈希算法
-- hex - 十六进制转换
+- eframe - GUI framework
+- sha1, sha2, sha3 - SHA family hash algorithms
+- libsm - Chinese SM3 hash algorithm
+- hex - Hexadecimal conversion
+- rfd - File dialog library
+
+## Project Structure
+
+- `src/algorithms/` - Hash algorithm implementations
+- `src/models/` - Data structures and models
+- `src/ui/` - User interface components
+- `src/utils/` - Utility functions and helpers
