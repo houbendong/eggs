@@ -65,10 +65,16 @@ impl PcrSimulator {
     pub fn new(algorithm: HashAlgorithm) -> Self {
         let output_size = algorithm.output_size_bytes();
         
-        // Initialize PCR values to all zeros
+        // Initialize PCR values
         let mut pcr_values = Vec::new();
-        for _ in 0..24 {
-            pcr_values.push(vec![0u8; output_size]);
+        for i in 0..24 {
+            if i >= 17 && i <= 22 {
+                // PCR 17-22 initial value F
+                pcr_values.push(vec![0xFF; output_size]);
+            } else {
+                // PCR 0-16 and 23 initial value 0
+                pcr_values.push(vec![0u8; output_size]);
+            }
         }
 
         Self {
@@ -154,10 +160,18 @@ impl PcrSimulator {
     /// Reset PCR values
     pub fn reset(&mut self) {
         let output_size = self.algorithm.output_size_bytes();
-        // Reset all PCR values to zeros
-        for pcr in &mut self.pcr_values {
-            *pcr = vec![0u8; output_size];
+        
+        // Reset PCR values to their initial values
+        for i in 0..self.pcr_values.len() {
+            if i >= 17 && i <= 22 {
+                // PCR 17-22 reset F
+                self.pcr_values[i] = vec![0xFF; output_size];
+            } else {
+                // PCR 0-16 and 23 reset 0
+                self.pcr_values[i] = vec![0u8; output_size];
+            }
         }
+        
         self.measurement_log.clear();
     }
 
@@ -182,9 +196,13 @@ impl PcrSimulator {
             return Err(format!("Invalid PCR index: {}", pcr_index));
         }
 
-        // Reset target PCR
+        // Reset target PCR to its initial value
         let output_size = self.algorithm.output_size_bytes();
-        self.pcr_values[pcr_index] = vec![0u8; output_size];
+        if pcr_index >= 17 && pcr_index <= 22 {
+            self.pcr_values[pcr_index] = vec![0xFF; output_size];
+        } else {
+            self.pcr_values[pcr_index] = vec![0u8; output_size];
+        }
         
         // Apply all measurements
         for measurement in measurements {
